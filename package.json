@@ -1,6 +1,9 @@
 {
   "name": "digitalizacion",
   "version": "0.0.0",
+  "engines": {
+    "node": "16.13.1"
+  },
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
