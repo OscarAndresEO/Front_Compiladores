@@ -1,0 +1,53 @@
+<div class="card-body ">
+  <mat-card-title class="titulo"> De Java a Python</mat-card-title>
+
+  <div class="modal-dialog modal-lg modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header titulo">
+        
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="agregarForm">
+          <div class="row">          
+            <div class="col-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Código Java</mat-label>
+                <textarea matInput rows="8" cols="130" #nombre formControlName="textoJava" placeholder="Codigo Java" maxlength="225"
+                  autocomplete="off" ></textarea>
+                <mat-hint align="end">{{agregarForm.controls.textoJava.value?.length ||
+                  0}}/225</mat-hint>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="row">          
+            <div class="col-6">
+              <mat-form-field appearance="outline">
+                <mat-label>Código Python</mat-label>
+                <textarea matInput rows="8" cols="130" #nombre  placeholder="Codigo Java" 
+                  autocomplete="off" ></textarea>
+              </mat-form-field>
+            </div>
+          </div>
+          <div class="container">
+            <div class="file-input">
+              <input type="file" multiple (change)="onFilesSelected($event)">
+            </div>
+
+            <ul class="file-list">
+              <li class="file-item" *ngFor="let file of selectedFiles; let i = index">
+                <span class="file-name">{{ getFileName(file) }}</span>
+                <button class="remove-button" mat-icon-button color="warn" (click)="removeFile(i)">
+                  <mat-icon>delete</mat-icon>
+                </button>
+              </li>
+            </ul>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btnCancelar" (click)=" limpiar()" data-bs-dismiss="modal">Cancelar</button>
+        <button type="button" data-bs-dismiss="modal" class="btnGuardar" (click)="guardar()">Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

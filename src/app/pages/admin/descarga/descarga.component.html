@@ -1,0 +1,86 @@
+<div class="card-body">
+    <mat-card-title class="titulo"> Descarga de Documentos </mat-card-title>
+</div>
+
+<div class="container-fluid top">
+    <div class="row">
+        <div class="col-md-6">
+            <mat-accordion>
+                <mat-expansion-panel #panel [expanded]="true">
+                    <mat-expansion-panel-header>
+                        <mat-panel-title> Filtro de búsqueda </mat-panel-title>
+                        <mat-panel-description></mat-panel-description>
+                    </mat-expansion-panel-header>
+                    <form [formGroup]="searchForm">
+                        <h4>Rango de Fechas:</h4>
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-form-field>
+                                    <!-- #filterFecDesde-->
+                                    <mat-label>Desde: </mat-label>
+                                    <input matInput [matDatepicker]="fecDesde" formControlName="fechaDesde" required
+                                        readonly />
+                                    <mat-datepicker-toggle matSuffix [for]="fecDesde"></mat-datepicker-toggle>
+                                    <mat-datepicker #fecDesde></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-6">
+                                <mat-form-field>
+                                    <!-- #filterFecHasta-->
+                                    <mat-label>Hasta: </mat-label>
+                                    <input matInput [matDatepicker]="fecHasta" formControlName="fechaHasta" required
+                                        readonly />
+                                    <mat-datepicker-toggle matSuffix [for]="fecHasta"></mat-datepicker-toggle>
+                                    <mat-datepicker #fecHasta></mat-datepicker>
+                                </mat-form-field>
+                            </div>
+                        </div>
+
+                        <div class="row">
+                            <div class="col-6">
+                                <mat-form-field>
+                                    <!-- #filterNoRequisicion-->
+                                    <mat-label>Propietario: </mat-label>
+                                    <input matInput formControlName="propietario" />
+                                </mat-form-field>
+                            </div>
+                        </div>
+                    </form>
+
+                    <button mat-raised-button type="button" (click)="bucarDocumento()" class="botones mt-2 mb-4 ml-2">
+                        <mat-icon>search</mat-icon>
+                        Buscar
+                    </button>
+
+                    <button mat-raised-button color="primary" class="botones">
+                        <mat-icon>clear</mat-icon>
+                        Limpiar filtro
+                    </button>
+
+                   
+                </mat-expansion-panel>
+            </mat-accordion>
+        </div>
+    </div>
+</div>
+<table class="table table-striped table-bordered small" >
+    <thead>
+        <tr>
+            <th scope="col">ID Documentoth>
+            <th scope="col">Nombre Documento</th>
+            <th scope="col">Archivo</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let doc of documentos; let i = index">
+            <td align="right">{{ i + 1 }}</td>
+            <td>{{ doc.nombre_Documento }}</td>
+            <td align="center">
+                <button mat-button color="primary" class="iconos"
+                    (click)="prwviewDoc(doc.id_Documento, doc.nombre_Documento)">
+                    <mat-icon class="iconos">remove_red_eye</mat-icon>
+                </button>
+            </td>
+        </tr>
+    </tbody>
+</table>
