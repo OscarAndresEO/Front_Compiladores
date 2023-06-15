@@ -52,43 +52,56 @@ export class DocumentosComponent implements OnInit {
 
   guardar() {
     const formData = new FormData();
-    if (this.agregarForm.get('textoJava').value !== null) {
-      console.log(this.agregarForm.get('textoJava').value);
+    if (
+      this.agregarForm.get('textoJava').value !== null &&
+      this.selectedFiles.length > 0
+    ){
+      Swal.fire({
+        title: 'Debe de enviar solo una opcion',
+        text: '',
+        icon: 'error',
+      });
+    }else{
+      
+      
+      if (this.agregarForm.get('textoJava').value !== null) {
+        console.log(this.agregarForm.get('textoJava').value);
 
-      formData.append('textoJava', this.agregarForm.get('textoJava').value);
+        formData.append('textoJava', this.agregarForm.get('textoJava').value);
 
-      console.log(this.formDataToJSON(formData));
-      this.documentoServicio.enviarTexto(formData).subscribe(
-        (response) => {
-          console.log('Se hizo la solicitud correctamente');
+        console.log(this.formDataToJSON(formData));
+        this.documentoServicio.enviarTexto(formData).subscribe(
+          (response) => {
+            console.log('Se hizo la solicitud correctamente');
 
-          console.log(response);
-          this.selectedFiles = null;
-          this.agregarForm.reset();
-        },
-        (error) => {
-          console.error('Error al enviar el texto:', error);
+            console.log(response);
+            this.selectedFiles = null;
+            this.agregarForm.reset();
+          },
+          (error) => {
+            console.error('Error al enviar el texto:', error);
+          }
+        );
+      } else {
+        for (let i = 0; i < this.selectedFiles.length; i++) {
+          formData.append('file', this.selectedFiles[i]);
         }
-      );
-    } else {
-      for (let i = 0; i < this.selectedFiles.length; i++) {
-        formData.append('file', this.selectedFiles[i]);
+
+        this.documentoServicio.enviarDocumento(formData).subscribe(
+          (response) => {
+            Swal.fire({
+              title: 'El archivo fue enviado correctamente.',
+              text: '',
+              icon: 'success',
+            });
+            this.selectedFiles = null;
+            this.agregarForm.reset();
+          },
+          (error) => {
+            console.error('Error al guardar el documento:', error);
+          }
+        );
       }
-
-      this.documentoServicio.enviarDocumento(formData).subscribe(
-        (response) => {
-          Swal.fire({
-            title: 'El archivo fue enviado correctamente.',
-            text: '',
-            icon: 'success',
-          });
-          this.selectedFiles = null;
-          this.agregarForm.reset();
-        },
-        (error) => {
-          console.error('Error al guardar el documento:', error);
-        }
-      );
     }
   }
 
